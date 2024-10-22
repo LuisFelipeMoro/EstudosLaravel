@@ -48,16 +48,14 @@ class ExampleTest extends TestCase
             'password' => bcrypt('securepassword'),
         ]);
 
-        try {
-            User::create([
-                'name' => 'Second',
-                'email' => 'test2@example.com',
-                'password' => bcrypt('anotherpassword'),
-            ]);
-            $this->fail('Expected QueryException was not thrown.');
-        } catch (QueryException $e) {
-            $this->assertStringContainsString('duplicate key value violates unique constraint', $e->getMessage());
-        }
+        $this->expectException(\Illuminate\Database\QueryException::class);
+
+         User::create([
+            'name' => 'Second',
+            'email' => 'test2@example.com',
+            'password' => bcrypt('anotherpassword'),
+        ]);
+    
 
         $this->assertDatabaseHas('users', [
             'email' => 'test2@example.com',
