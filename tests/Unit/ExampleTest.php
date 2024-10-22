@@ -44,14 +44,14 @@ class ExampleTest extends TestCase
     {
         User::create([
             'name' => 'First',
-            'email' => 'test@example.com',
+            'email' => 'test2@example.com',
             'password' => bcrypt('securepassword'),
         ]);
 
         try {
             User::create([
                 'name' => 'Second',
-                'email' => 'test@example.com',
+                'email' => 'test2@example.com',
                 'password' => bcrypt('anotherpassword'),
             ]);
             $this->fail('Expected QueryException was not thrown.');
@@ -60,12 +60,12 @@ class ExampleTest extends TestCase
         }
 
         $this->assertDatabaseHas('users', [
-            'email' => 'test@example.com',
+            'email' => 'test2@example.com',
             'name' => 'First',
         ]);
 
         $this->assertDatabaseMissing('users', [
-            'email' => 'test@example.com',
+            'email' => 'test2@example.com',
             'name' => 'Second',
         ]);
     }
